@@ -13,9 +13,7 @@ public class AdminService {
 	@Autowired
 	private AdminRepository arepo;
 
-	
 	public AdminService(AdminRepository arepo) {
-		System.out.println("DI via Constructor");
 		this.arepo = arepo;
 	}
 
@@ -26,14 +24,14 @@ public class AdminService {
 	}
 
 	// updating admin
-	public Admin updateAdmin(Admin updateAdmin) {
-		Admin admin = fetchAdmin(updateAdmin.getId());
+	public Admin updateAdmin(Admin updateAdmin, int id) {
+		Admin admin = fetchAdmin(id);
 		Admin updated = null;
 		if (admin != null) {
 			admin.setUname(updateAdmin.getUname());
 			admin.setPassword(updateAdmin.getPassword());
+			System.out.println(updateAdmin);
 			updated = arepo.save(admin);
-			;
 		}
 
 		return updated;
@@ -41,11 +39,12 @@ public class AdminService {
 
 	// Reading admin
 	public Admin fetchAdmin(int id) {
-		Optional<Admin> res = arepo.findById(id);
-		if (res.isPresent()) {
-			return res.get();
+		Optional<Admin> admin = arepo.findById(id);
+		if (admin.isPresent()) {
+			return admin.get();
 		}
 		return null;
+
 	}
 
 	// Delete a admin record
