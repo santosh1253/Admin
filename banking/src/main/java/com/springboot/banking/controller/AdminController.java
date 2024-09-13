@@ -1,4 +1,4 @@
-package com.springboot.banking.contoller;
+package com.springboot.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,35 +14,28 @@ import com.springboot.banking.service.AdminService;
 
 @RestController
 public class AdminController {
-	
+
 	@Autowired
 	private AdminService service;
-	
+
 	@PostMapping("/admin")
-	public Admin saveUser(@RequestBody Admin admin)
-	{
+	public Admin saveUser(@RequestBody Admin admin) {
 		return service.createAdmin(admin);
 	}
-	
+
 	@PutMapping("/updateadmin/{id}")
-	public Admin updateUser(@RequestBody Admin updatedAdmin,@PathVariable int id)
-	{
-		return service.updateAdmin(updatedAdmin,id);
+	public Admin updateUser(@RequestBody Admin updatedAdmin, @PathVariable int id) {
+		return service.updateAdmin(updatedAdmin, id);
 	}
-	
+
 	@GetMapping("/admin/{id}")
-	public Admin getUser(@PathVariable int id)
-	{
+	public Admin getUser(@PathVariable int id) {
 		return service.fetchAdmin(id);
 	}
-	
+
 	@DeleteMapping("/admin/{id}")
-	public String deleteUser(@PathVariable int id)
-	{
+	public String deleteUser(@PathVariable int id) {
 		return service.deleteAdmin(id);
 	}
-	
-	
-	
 
 }
