@@ -2,6 +2,8 @@ package com.springboot.banking.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,6 +31,7 @@ public class Records {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="accNumber")
+	@JsonIgnore
 	private Customer customer;
 
 	public Long getTid() {

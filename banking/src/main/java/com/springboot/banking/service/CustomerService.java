@@ -2,12 +2,13 @@ package com.springboot.banking.service;
 
 
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springboot.banking.entity.Customer;
+import com.springboot.banking.entity.PasswordGenerator;
 import com.springboot.banking.exception.CustomerNotFoundException;
 import com.springboot.banking.exception.MinBalanceException;
 import com.springboot.banking.repository.CustomerRepository;
@@ -17,12 +18,14 @@ public class CustomerService {
 	
 	@Autowired
 	private CustomerRepository crepo;
-	public Customer saveCustomer(Customer customer) throws MinBalanceException
+	public Customer saveCustomer(Customer customer) throws MinBalanceException, CustomerNotFoundException
 	{
-		if(customer.getBalance()<1000)
+		// Checking if the user is a new user or not & min balance is 1000/-
+		if(customer.getAccno()==null && customer.getBalance()<1000)
 		{
 			throw new MinBalanceException();
 		}
+		customer.setPassword(PasswordGenerator.generateRandomPassword(8));
 		return crepo.save(customer);
 	}
 	public Customer fetchCutomerByAccno(Long accno) throws CustomerNotFoundException
@@ -54,9 +57,30 @@ public class CustomerService {
 	{
 		Customer c=fetchCutomerByAccno(accno);
 		c.setPassword(updatedPassword);
+		crepo.save(c);
 		return "Customer with "+accno+" password updated successfully";
 	}
 	
+	public List<Customer> getAllCustomers()
+	{
+		return crepo.findAll();
+	}
+	public String validateCustomer(Long accno,String password) throws CustomerNotFoundException
+	{
+		Customer fetched=fetchCutomerByAccno(accno);
+		if(fetched.getAccno().equals(accno))
+		{
+			if(fetched.getPassword().equals(password))
+			{
+				return "User Validation Successful";
+			}
+			return "Please Enter Correct Password";
+		}
+		return "Wrong Credentials";
+	}
+
+	
+
 	
 
 }

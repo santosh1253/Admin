@@ -1,12 +1,18 @@
 package com.springboot.banking.entity;
 
 import java.sql.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Customer {
@@ -28,10 +34,14 @@ public class Customer {
 	private Long mobileno;
 	@Column(nullable = false, unique = true)
 	private String email;
+	@JsonIgnore
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = false)
 	private String address;
+	@OneToMany( mappedBy="customer" ,targetEntity = Records.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Records> records;
+	
 	public Long getAccno() {
 		return accno;
 	}
@@ -91,6 +101,13 @@ public class Customer {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public List<Records> getRecords() {
+		return records;
+	}
+	public void setRecords(List<Records> records) {
+		this.records = records;
 	}
 	public Customer(Long accno, String name, String acctype, double balance, String idproof, Date dob, Long mobileno,
 			String email, String password, String address) {
