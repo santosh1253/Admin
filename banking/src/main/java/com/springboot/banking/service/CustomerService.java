@@ -61,10 +61,12 @@ public class CustomerService {
 		return "Customer with "+accno+" password updated successfully";
 	}
 	
+	//Fetching all the customers
 	public List<Customer> getAllCustomers()
 	{
 		return crepo.findAll();
 	}
+	// Validating a customer
 	public String validateCustomer(Long accno,String password) throws CustomerNotFoundException
 	{
 		Customer fetched=fetchCutomerByAccno(accno);

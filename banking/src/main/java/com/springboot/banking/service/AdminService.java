@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springboot.banking.entity.Admin;
+import com.springboot.banking.exception.AdminNotFoundException;
 import com.springboot.banking.repository.AdminRepository;
 
 @Service
@@ -51,6 +52,21 @@ public class AdminService {
 	public String deleteAdmin(int id) {
 		arepo.deleteById(id);
 		return "Admin with id " + id + " delted";
+	}
+	
+	//Validating Admin
+	public String validateAdmin(Admin admin,int id) throws AdminNotFoundException {
+		Admin fetched = fetchAdmin(id);
+		String uname = admin.getUname();
+		String password = admin.getPassword();
+		if (fetched.getUname().equals(uname)) {
+			if (fetched.getPassword().equals(password))
+				return "Success";
+			else
+				return "Enter the Correct Password";
+		}
+		return "Wrong Credentials";
+
 	}
 
 }

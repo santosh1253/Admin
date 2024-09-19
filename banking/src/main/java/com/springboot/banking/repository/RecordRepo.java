@@ -11,4 +11,7 @@ import com.springboot.banking.entity.Records;
 public interface RecordRepo extends JpaRepository<Records,Long>{
 
 	List<Records> findTop10ByCustomerAccnoOrderByTimeDesc(Long accno);
+	
+	//private Customer customer;
+	//private 
 }

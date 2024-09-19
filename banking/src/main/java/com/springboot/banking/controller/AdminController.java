@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.banking.entity.Admin;
+import com.springboot.banking.exception.AdminNotFoundException;
 import com.springboot.banking.service.AdminService;
 
 @RestController
@@ -36,6 +37,11 @@ public class AdminController {
 	@DeleteMapping("/admin/{id}")
 	public String deleteUser(@PathVariable int id) {
 		return service.deleteAdmin(id);
+	}
+	
+	@PostMapping("/validateAdmin/{id}")
+	public String validateAdmin(@RequestBody Admin updatedAdmin,@PathVariable int id) throws AdminNotFoundException {
+		return service.validateAdmin(updatedAdmin,id);
 	}
 
 }

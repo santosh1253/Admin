@@ -29,7 +29,6 @@ public class RecordService {
 	public Records saveRecordByAccno(Records r,Long accno) throws CustomerNotFoundException, MinBalanceException, InsufficientFundsException
 	{
 		Customer c=cs.fetchCutomerByAccno(accno);
-		System.out.println(r);
 		// 1 is withdrawl
 		if(r.getRecordType()==1)
 		{
@@ -49,11 +48,12 @@ public class RecordService {
 		return rr.save(r);// saving the transaction persistantly
 		
 	}
-	
+	// Get transaction by TID
 	public Records getRecordByTid(Long tid) throws RecordNotFoundException
 	{
 		return rr.findById(tid).orElseThrow(()->new RecordNotFoundException(tid));
 	}
+	
 	
 	public List<Records> get10RecordsByAccno(Long accno)
 	{

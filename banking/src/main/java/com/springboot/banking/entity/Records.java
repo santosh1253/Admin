@@ -29,6 +29,7 @@ public class Records {
 	@Column(nullable=false)
 	private LocalDateTime time;
 	
+	//bidirectional mapping both ends customer and records 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="accNumber")
 	@JsonIgnore
